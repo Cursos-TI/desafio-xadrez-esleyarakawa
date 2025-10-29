@@ -1,64 +1,86 @@
 #include <stdio.h>
 
-int main() {
+// ------------------- TORRE (Recursividade) -------------------
+void moverTorre(int passos) {
+    if (passos == 0) return; // Caso base da recursão
+    printf("Direita\n");
+    moverTorre(passos - 1); // Chamada recursiva
+}
 
-    // ----------------- MOVIMENTAÇÃO DA TORRE -----------------
-    printf("Movimento da Torre:\n");
-    for (int i = 1; i <= 5; i++) {
-        printf("Direita\n");
+// ------------------- BISPO (Recursividade + Loops Aninhados) -------------------
+void moverBispo(int passos) {
+    if (passos == 0) return; // Caso base recursivo
+
+    // Loop externo: movimento vertical
+    for (int v = 1; v <= 1; v++) {
+        // Loop interno: movimento horizontal
+        for (int h = 1; h <= 1; h++) {
+            printf("Cima Direita\n");
+        }
     }
 
-    printf("\n");
+    moverBispo(passos - 1); // Próximo passo recursivo
+}
 
-    // ----------------- MOVIMENTAÇÃO DO BISPO -----------------
-    printf("Movimento do Bispo:\n");
-    int i = 1;
-    while (i <= 5) {
-        printf("Cima Direita\n");
-        i++;
-    }
+// ------------------- RAINHA (Recursividade) -------------------
+void moverRainha(int passos) {
+    if (passos == 0) return;
+    printf("Esquerda\n");
+    moverRainha(passos - 1);
+}
 
-    printf("\n");
-
-    // ----------------- MOVIMENTAÇÃO DA RAINHA -----------------
-    printf("Movimento da Rainha:\n");
-    int j = 1;
-    do {
-        printf("Esquerda\n");
-        j++;
-    } while (j <= 8);
-
-    printf("\n");
-
-    // ----------------- MOVIMENTAÇÃO DO CAVALO -----------------
-    // Movimento em "L": 2 casas para baixo e 1 para esquerda
-    // Usando loops aninhados: for + while
+// ------------------- CAVALO (Loops Complexos) -------------------
+void moverCavalo() {
+    int movimentosFeitos = 0;
 
     printf("Movimento do Cavalo:\n");
+    // Duas casas para cima e uma para a direita
+    for (int vertical = 2; vertical >= -2; vertical--) {
+        for (int horizontal = 1; horizontal <= 2; horizontal++) {
 
-    int passosBaixo = 2;
-    int passosEsquerda = 1;
+            // Ignora movimentos inválidos usando continue
+            if (vertical > 0 && horizontal != 1) continue;
 
-    // Loop externo controla as duas partes do movimento
-    for (int etapa = 1; etapa <= 2; etapa++) {
+            // Limita os movimentos do cavalo usando break
+            if (movimentosFeitos >= 3) break;
 
-        // Primeira etapa: mover para baixo
-        if (etapa == 1) {
-            int c = 1;
-            while (c <= passosBaixo) { // loop interno (while)
-                printf("Baixo\n");
-                c++;
+            if (vertical > 0) {
+                printf("Cima\n");
             }
-        }
-        // Segunda etapa: mover para a esquerda
-        else {
-            int c = 1;
-            while (c <= passosEsquerda) { // loop interno (while)
-                printf("Esquerda\n");
-                c++;
+
+            if (vertical == 0 && horizontal == 1) {
+                printf("Direita\n");
             }
+
+            movimentosFeitos++;
         }
+        if (movimentosFeitos >= 3) break;
     }
+}
+
+// ------------------- PROGRAMA PRINCIPAL -------------------
+int main() {
+
+    // TORRE
+    printf("Movimento da Torre:\n");
+    moverTorre(5);
+
+    printf("\n");
+
+    // BISPO
+    printf("Movimento do Bispo:\n");
+    moverBispo(5);
+
+    printf("\n");
+
+    // RAINHA
+    printf("Movimento da Rainha:\n");
+    moverRainha(8);
+
+    printf("\n");
+
+    // CAVALO
+    moverCavalo();
 
     return 0;
 }
